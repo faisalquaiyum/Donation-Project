@@ -3,7 +3,19 @@ import { FaTrophy } from 'react-icons/fa';
 import AppContext from '../context/AppContext';
 
 const Leaderboard = () => {
-  const {leaderboard} = useContext(AppContext)
+  const { leaderboard } = useContext(AppContext);
+  
+  // Static fallback data
+  const staticData = [
+    { name: 'Faisal', donations: 500 },
+    { name: 'Kaif', donations: 400 },
+    { name: 'Sahil', donations: 350 },
+    { name: 'Saquib', donations: 300 },
+    { name: 'Hemant', donations: 250 },
+  ];
+
+  // Determine whether to show static or dynamic data
+  const displayData = leaderboard.length > 0 ? leaderboard : staticData;
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
@@ -17,17 +29,13 @@ const Leaderboard = () => {
             <div>Name</div>
             <div>Donations</div>
           </div>
-          {leaderboard.length > 0 ? (
-            leaderboard.map((user, index) => (
-              <div key={index} className="grid grid-cols-3 gap-4 py-2 border-t">
-                <div>{index + 1}</div>
-                <div>{user.name}</div>
-                <div>${user.donations}</div>
-              </div>
-            ))
-          ) : (
-            <p className="text-center text-gray-600">Loading leaderboard...</p>
-          )}
+          {displayData.map((user, index) => (
+            <div key={index} className="grid grid-cols-3 gap-4 py-2 border-t">
+              <div>{index + 1}</div>
+              <div>{user.name}</div>
+              <div>${user.donations}</div>
+            </div>
+          ))}
         </div>
       </div>
     </div>
